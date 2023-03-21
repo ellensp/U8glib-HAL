@@ -49,7 +49,7 @@
 #if defined(ARDUINO) && !defined(ARDUINO_ARCH_STM32)
 
 #if ARDUINO < 100
-//#include <WProgram.h>
+#include <WProgram.h>
 #include <wiring_private.h>
 #include <pins_arduino.h>
 #else

@@ -48,7 +48,7 @@ uint8_t u8g_call_dev_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg)
 
 uint8_t u8g_InitLL(u8g_t *u8g, u8g_dev_t *dev)
 {
-  uint8_t r;
+  uint8_t r = 0;
   u8g->state_cb(U8G_STATE_MSG_BACKUP_ENV);
   r =  u8g_call_dev_fn(u8g, dev, U8G_DEV_MSG_INIT, NULL);
   u8g->state_cb(U8G_STATE_MSG_BACKUP_U8G);

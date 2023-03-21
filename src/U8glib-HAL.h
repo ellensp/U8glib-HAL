@@ -46,6 +46,9 @@
 
 #include "clib/u8g.h"
 
+class __FlashStringHelper;
+#define F(string_literal) (reinterpret_cast<const __FlashStringHelper *>(PSTR(string_literal)))
+
 class U8GLIB : public U8GLIB_PRINT_CLASS {
   private:
     u8g_t u8g;
@@ -80,7 +83,7 @@ class U8GLIB : public U8GLIB_PRINT_CLASS {
     void init(u8g_dev_t *dev)                                                                   { prepare(); (void)u8g_Init(&u8g, dev); }
     void init(u8g_dev_t *dev, u8g_com_fnptr com_fn)                                             { prepare(); (void)u8g_InitComFn(&u8g, dev, com_fn); }
     void init(u8g_dev_t *dev, uint8_t sck, uint8_t mosi, uint8_t cs, uint8_t a0, uint8_t reset) { (void)initSPI(dev, sck, mosi, cs, a0, reset); }
-    void init(u8g_dev_t *dev, uint8_t cs, uint8_t a0, uint8_t reset)                            { (void)initHWSPI(dev, cs, a0, reset); }
+    void init(u8g_dev_t *dev, uint8_t cs, uint8_t a0, uint8_t reset)                            { }//(void)initHWSPI(dev, cs, a0, reset); }
     void init(u8g_dev_t *dev, uint8_t options)                                                  { (void)initI2C(dev, options); }
     void init(u8g_dev_t *dev, uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, uint8_t en, uint8_t cs1, uint8_t cs2, uint8_t di, uint8_t rw, uint8_t reset)
       { (void)init8Bit(dev, d0, d1, d2, d3, d4, d5, d6, d7, en, cs1, cs2, di, rw, reset); }
@@ -95,11 +98,11 @@ class U8GLIB : public U8GLIB_PRINT_CLASS {
     u8g_uint_t getPrintRow() { return ty; }
 
     /* implementation of the write interface to the print class */
-    #if defined(ARDUINO) && ARDUINO < 100
-      void write(uint8_t c) { tx += u8g_DrawGlyph(&u8g, tx, ty, c); }
-    #else
+    // #if defined(ARDUINO) && ARDUINO < 100
+    //   void write(uint8_t c) { tx += u8g_DrawGlyph(&u8g, tx, ty, c); }
+    // #else
       size_t write(uint8_t c) { tx += u8g_DrawGlyph(&u8g, tx, ty, c); return 1;}
-    #endif
+    // #endif
 
      /* screen rotation */
     void undoRotation() { u8g_UndoRotation(&u8g); }
